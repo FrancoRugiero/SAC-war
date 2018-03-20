@@ -13,6 +13,6 @@
     //<div id="logo"><img src="/img/logo.jpg" alt="Logo"/></div>
     //<div id="logo"><img src="<c:url value="/img/logo.jpg"/>" alt="Logo"/></div>
   %>
-  <div id="logo"><img src="/img/logo.jpg" alt="Logo"/></div>
+  <div id="logo"><img src="<c:url value="/img/logo.jpg"/>" alt="Logo"/></div>
   <div id="sitename"><h1>Sistema de Administración de Cursos</h1></div>
 </div>
