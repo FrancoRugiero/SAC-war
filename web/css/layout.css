@@ -1,0 +1,100 @@
+/* 
+    Document   : layout
+    Created on : Aug 8, 2012, 5:15:52 PM
+    Author     : dlcusr
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#header {
+    background-color: blue;
+    height: 120px;
+}
+
+#logo-name {
+    display: table-caption;
+    vertical-align: middle;
+    width: 100%;
+}
+
+#logo {
+    float: left;
+    padding: 10px 10px 10px 10px;
+}
+
+#sitename {
+    margin-left: 100px;
+}
+
+#main {
+
+}
+
+#left-sidebar {
+    float: left;
+    background-color: yellow;
+    width: 240px;
+}
+
+#content {
+    background-color: aqua;
+    margin-left: 240px;
+}
+
+#footer {
+    clear: both;
+    background-color: red;
+    height: 80px;
+}
+
+.curso {
+    padding-bottom: 20px;
+    border: 1px dashed gray;
+}
+
+.curso h2 {
+    font-size: 18px;
+}
+
+.curso .details-wrapper {
+    float: right;
+}
+
+.curso .details {
+    float: left;
+    font-size: 12px;
+    padding-left: 20px;
+}
+
+.task {
+    float: left;
+    padding: 2px 2px 2px 2px;
+}
+
+.task button {
+    min-width: 90px;
+}
+
+.tab {
+    float: left;
+    border: black solid 1px;
+    background-color: silver;
+}
+
+.clearfix:after {
+    clear: both;
+    content:".";
+    display: block;
+    height: 0;
+    visibility: hidden
+}
+
+/* STYLE */
+.form-msg {
+    color: red;
+    font-weight: bold;
+}
