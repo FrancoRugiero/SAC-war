@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import utn.frc.dlc.sac.Alumno;
 import utn.frc.dlc.sac.Curso;
 import utn.frc.dlc.sac.SAC;
+import utn.frc.dlc.sac.db.DBAlumno;
+import utn.frc.dlc.sac.db.DBCurso;
+import utn.frc.dlc.sac.db.DBManager;
 import utn.frc.dlc.sac.web.ErrorMsg;
 
 /**
@@ -39,16 +42,16 @@ public class CtrlCursoDesinscribir extends HttpServlet {
         ErrorMsg errorMsg = null;
         String errorTitle = "No se pudo efectuar la desinscripción";
         String dest = "/error.jsp";
-        //DBManager db = null;
+        DBManager db = null;
 
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             
             //----------------------------------------
-            Curso curso = SAC.getCurso(id);
+            //Curso curso = SAC.getCurso(id);
             //----------------------------------------
-            //db = SAC.getSingleDB();
-            //Curso curso = DBCurso.loadDB(db, id);
+            db = SAC.getSingleDB();
+            Curso curso = DBCurso.loadDB(db, id);
             //----------------------------------------
             //db = SAC.getPoolDB();
             //Curso curso = DBCurso.loadDB(db, id);
@@ -61,9 +64,9 @@ public class CtrlCursoDesinscribir extends HttpServlet {
             int idAlumno = Integer.parseInt(request.getParameter("alumno"));
 
             //----------------------------------------
-            Alumno alumno = SAC.getAlumno(idAlumno);
+            //Alumno alumno = SAC.getAlumno(idAlumno);
             //----------------------------------------
-            //Alumno alumno = DBAlumno.loadDB(db, idAlumno);
+            Alumno alumno = DBAlumno.loadDB(db, idAlumno);
             //----------------------------------------
             
             if (alumno == null) {
@@ -71,10 +74,10 @@ public class CtrlCursoDesinscribir extends HttpServlet {
             }
 
             //----------------------------------------
-            curso.removeAlumno(alumno);
+            //curso.removeAlumno(alumno);
             //----------------------------------------
-            //DBCurso.deleteInscripcion(db, curso, alumno);
-            //DBCurso.loadAlumnos(db, curso);
+            DBCurso.deleteInscripcion(db, curso, alumno);
+            DBCurso.loadAlumnos(db, curso);
             //----------------------------------------
 
             request.setAttribute("curso", curso);
@@ -84,7 +87,7 @@ public class CtrlCursoDesinscribir extends HttpServlet {
             errorMsg = new ErrorMsg(errorTitle, e.getMessage());
             request.setAttribute("errorMsg", errorMsg);
         } finally {
-            //if (db != null) db.close();
+            if (db != null) db.close();
         }
 
         ServletContext app = this.getServletContext();

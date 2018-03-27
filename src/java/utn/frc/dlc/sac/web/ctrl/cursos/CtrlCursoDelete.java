@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utn.frc.dlc.sac.SAC;
+import utn.frc.dlc.sac.db.DBCurso;
+import utn.frc.dlc.sac.db.DBManager;
 import utn.frc.dlc.sac.web.ErrorMsg;
 
 /**
@@ -37,16 +39,16 @@ public class CtrlCursoDelete extends HttpServlet {
         ErrorMsg errorMsg = null;
         String errorTitle = "No se pudo eliminar el curso";
         String dest = "/error.jsp";
-        //DBManager db = null;
+        DBManager db = null;
 
         try {
             int id = Integer.parseInt(request.getParameter("id"));
 
             //----------------------------------------
-            SAC.deleteCurso(id);
+            //SAC.deleteCurso(id);
             //----------------------------------------
-            //db = SAC.getSingleDB();
-            //DBCurso.deleteDB(db, id);
+            db = SAC.getSingleDB();
+            DBCurso.deleteDB(db, id);
             //----------------------------------------
             //db = SAC.getPoolDB();
             //DBCurso.deleteDB(db, id);
@@ -58,7 +60,7 @@ public class CtrlCursoDelete extends HttpServlet {
             errorMsg = new ErrorMsg(errorTitle, e.getMessage());
             request.setAttribute("errorMsg", errorMsg);
         } finally {
-            //if (db != null) db.close();
+            if (db != null) db.close();
         }
 
         ServletContext app = this.getServletContext();

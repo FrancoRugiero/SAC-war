@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utn.frc.dlc.sac.SAC;
+import utn.frc.dlc.sac.db.DBAlumno;
+import utn.frc.dlc.sac.db.DBManager;
 import utn.frc.dlc.sac.web.ErrorMsg;
 
 /**
@@ -40,15 +42,15 @@ public class CtrlAlumnos extends HttpServlet {
         ErrorMsg errorMsg = null;
         String errorTitle = "No se pudo cargar los alumnos";
         String dest = "/error.jsp";
-        //DBManager db = null;
+        DBManager db = null;
 
         try {
             //----------------------------------------
-            if (request.getParameter("populate") != null) SAC.populateAlumnos();
-            List alumnos = SAC.getAlumnosList();
+            //if (request.getParameter("populate") != null) SAC.populateAlumnos();
+            //List alumnos = SAC.getAlumnosList();
             //----------------------------------------
-            //db = SAC.getSingleDB();
-            //List alumnos = DBAlumno.loadList(db);
+            db = SAC.getSingleDB();
+            List alumnos = DBAlumno.loadList(db);
             //----------------------------------------
             //db = SAC.getPoolDB();
             //List alumnos = DBAlumno.loadList(db);
@@ -61,7 +63,7 @@ public class CtrlAlumnos extends HttpServlet {
             errorMsg = new ErrorMsg(errorTitle, e.getMessage());
             request.setAttribute("errorMsg", errorMsg);
         } finally {
-            //if (db != null) db.close();
+            if (db != null) db.close();
         }
 
         ServletContext app = this.getServletContext();

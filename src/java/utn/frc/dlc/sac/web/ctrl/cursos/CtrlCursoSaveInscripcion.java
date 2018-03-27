@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import utn.frc.dlc.sac.Alumno;
 import utn.frc.dlc.sac.Curso;
 import utn.frc.dlc.sac.SAC;
+import utn.frc.dlc.sac.db.DBAlumno;
+import utn.frc.dlc.sac.db.DBCurso;
+import utn.frc.dlc.sac.db.DBManager;
 import utn.frc.dlc.sac.web.ErrorMsg;
 
 /**
@@ -40,15 +43,15 @@ public class CtrlCursoSaveInscripcion extends HttpServlet {
         ErrorMsg errorMsg = null;
         String errorTitle = "No se pudo efectuar la inscripción";
         String dest = "/error.jsp";
-        //DBManager db = null;
+        DBManager db = null;
 
         try {
             int id = Integer.parseInt(request.getParameter("id"));
 
-            Curso curso = SAC.getCurso(id);
+            //Curso curso = SAC.getCurso(id);
             //----------------------------------------
-            //db = SAC.getSingleDB();
-            //Curso curso = DBCurso.loadDB(db, id);
+            db = SAC.getSingleDB();
+            Curso curso = DBCurso.loadDB(db, id);
             //----------------------------------------
             //db = SAC.getPoolDB();
             //Curso curso = DBCurso.loadDB(db, id);
@@ -65,9 +68,9 @@ public class CtrlCursoSaveInscripcion extends HttpServlet {
                     String[] aux = tmp.split("-");
                     int idAlumno = Integer.parseInt(aux[1]);
                     //----------------------------------------
-                    Alumno alumno = SAC.getAlumno(idAlumno);
+                    //Alumno alumno = SAC.getAlumno(idAlumno);
                     //----------------------------------------
-                    //Alumno alumno = DBAlumno.loadDB(db, idAlumno);
+                    Alumno alumno = DBAlumno.loadDB(db, idAlumno);
                     //----------------------------------------
                     if (alumno == null) {
                         throw new Exception("El alumno especificado no existe");
@@ -77,19 +80,19 @@ public class CtrlCursoSaveInscripcion extends HttpServlet {
             }
 
             //----------------------------------------
-            //try {
-            //    db.beginTransaction();
-            //    DBCurso.saveAlumnos(db, curso);
-            //    db.commit();
-            //} catch (Exception e) {
-            //    try {
-            //        db.rollback();
-            //    } catch (Exception ee) {
-            //    }
-            //    throw new Exception(e.getMessage());
-            //}
-            //
-            //DBCurso.loadAlumnos(db, curso);
+            try {
+                db.beginTransaction();
+                DBCurso.saveAlumnos(db, curso);
+                db.commit();
+            } catch (Exception e) {
+                try {
+                    db.rollback();
+                } catch (Exception ee) {
+                }
+                throw new Exception(e.getMessage());
+            }
+            
+            DBCurso.loadAlumnos(db, curso);
             //----------------------------------------
 
             request.setAttribute("curso", curso);
@@ -99,7 +102,7 @@ public class CtrlCursoSaveInscripcion extends HttpServlet {
             errorMsg = new ErrorMsg(errorTitle, e.getMessage());
             request.setAttribute("errorMsg", errorMsg);
         } finally {
-          //if (db != null) db.close();
+          if (db != null) db.close();
         }
 
         ServletContext app = this.getServletContext();

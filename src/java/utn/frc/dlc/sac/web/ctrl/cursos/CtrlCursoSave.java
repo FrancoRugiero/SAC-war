@@ -6,7 +6,6 @@
 package utn.frc.dlc.sac.web.ctrl.cursos;
 
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import utn.frc.dlc.sac.Curso;
 import utn.frc.dlc.sac.Fecha;
 import utn.frc.dlc.sac.SAC;
+import utn.frc.dlc.sac.db.DBCurso;
+import utn.frc.dlc.sac.db.DBManager;
 import utn.frc.dlc.sac.web.ErrorMsg;
 
 /**
@@ -40,7 +41,7 @@ public class CtrlCursoSave extends HttpServlet {
         ErrorMsg errorMsg = null;
         String errorTitle = "No se pudo guardar el curso";
         String dest = "/error.jsp";
-        //DBManager db = null;
+        DBManager db = null;
 
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -61,21 +62,21 @@ public class CtrlCursoSave extends HttpServlet {
             Curso curso = new Curso(id, nombre, descripcion, fechaAlta, fechaBaja);
             try {
                 //----------------------------------------
-                List alumnos = null;
-                Curso aux = SAC.getCurso(id);
-                if (aux != null) {
-                    alumnos = aux.getAlumnos();
-                }
-                SAC.updateCurso(curso);
-                curso.setAlumnos(alumnos);
-                //----------------------------------------
-                //db = SAC.getSingleDB();
-                //if (id == 0) {
-                //    id = DBCurso.getNextId(db);
-                //    curso.setId(id);
+                //List alumnos = null;
+                //Curso aux = SAC.getCurso(id);
+                //if (aux != null) {
+                //    alumnos = aux.getAlumnos();
                 //}
-                //DBCurso.saveDB(db, curso);
-                //DBCurso.loadAlumnos(db, curso);
+                //SAC.updateCurso(curso);
+                //curso.setAlumnos(alumnos);
+                //----------------------------------------
+                db = SAC.getSingleDB();
+                if (id == 0) {
+                    id = DBCurso.getNextId(db);
+                    curso.setId(id);
+                }
+                DBCurso.saveDB(db, curso);
+                DBCurso.loadAlumnos(db, curso);
                 //----------------------------------------
                 //db = SAC.getPoolDB();
                 //if (id == 0) {
@@ -92,7 +93,7 @@ public class CtrlCursoSave extends HttpServlet {
                 request.setAttribute("formMsg", e.getMessage());
                 dest = "/curso.form.jsp";
             } finally {
-                //if (db!=null) db.close();
+                if (db!=null) db.close();
             }
             request.setAttribute("curso", curso);
 

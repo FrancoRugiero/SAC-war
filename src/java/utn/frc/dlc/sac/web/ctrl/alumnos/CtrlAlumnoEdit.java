@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utn.frc.dlc.sac.Alumno;
 import utn.frc.dlc.sac.SAC;
+import utn.frc.dlc.sac.db.DBAlumno;
+import utn.frc.dlc.sac.db.DBManager;
 import utn.frc.dlc.sac.web.ErrorMsg;
 
 /**
@@ -38,16 +40,16 @@ public class CtrlAlumnoEdit extends HttpServlet {
         ErrorMsg errorMsg = null;
         String errorTitle = "No se pudo cargar el alumno";
         String dest = "/error.jsp";
-        //DBManager db = null;
+        DBManager db = null;
 
         try {
             int id = Integer.parseInt(request.getParameter("id"));
 
             //----------------------------------------
-            Alumno alumno = SAC.getAlumno(id);
+            //Alumno alumno = SAC.getAlumno(id);
             //----------------------------------------
-            //db = SAC.getSingleDB();
-            //Alumno alumno = DBAlumno.loadDB(db, id);
+            db = SAC.getSingleDB();
+            Alumno alumno = DBAlumno.loadDB(db, id);
             //----------------------------------------
             //db = SAC.getPoolDB();
             //Alumno alumno = DBAlumno.loadDB(db, id);
@@ -64,7 +66,7 @@ public class CtrlAlumnoEdit extends HttpServlet {
             errorMsg = new ErrorMsg(errorTitle, e.getMessage());
             request.setAttribute("errorMsg", errorMsg);
         } finally {
-            //if (db != null) db.close();
+            if (db != null) db.close();
         }
 
         ServletContext app = this.getServletContext();

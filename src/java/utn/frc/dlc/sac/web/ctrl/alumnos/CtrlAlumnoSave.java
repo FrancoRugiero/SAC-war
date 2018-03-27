@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import utn.frc.dlc.sac.Alumno;
 import utn.frc.dlc.sac.SAC;
+import utn.frc.dlc.sac.db.DBAlumno;
+import utn.frc.dlc.sac.db.DBManager;
 import utn.frc.dlc.sac.web.ErrorMsg;
 
 /**
@@ -37,7 +39,7 @@ public class CtrlAlumnoSave extends HttpServlet {
         ErrorMsg errorMsg = null;
         String errorTitle = "No se pudo guardar el alumno";
         String dest = "/error.jsp";
-        //DBManager db = null;
+        DBManager db = null;
 
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -48,14 +50,14 @@ public class CtrlAlumnoSave extends HttpServlet {
             Alumno alumno = new Alumno(id, apellido, nombre, dni, legajo);
             try {
                 //----------------------------------------
-                SAC.updateAlumno(alumno);
+                //SAC.updateAlumno(alumno);
                 //----------------------------------------
-                //db = SAC.getSingleDB();
-                //if (id == 0) {
-                //    id = DBAlumno.getNextId(db);
-                //    alumno.setId(id);
-                //}
-                //DBAlumno.saveDBError(db, alumno);
+                db = SAC.getSingleDB();
+                if (id == 0) {
+                    id = DBAlumno.getNextId(db);
+                    alumno.setId(id);
+                }
+                DBAlumno.saveDBError(db, alumno);
                 //----------------------------------------
                 //db = SAC.getPoolDB();
                 //if (id == 0) {
@@ -71,7 +73,7 @@ public class CtrlAlumnoSave extends HttpServlet {
                 request.setAttribute("formMsg", e.getMessage());
                 dest = "/alumno.form.jsp";
             } finally {
-                //if (db!=null) db.close();
+                if (db!=null) db.close();
             }
             request.setAttribute("alumno", alumno);
 
