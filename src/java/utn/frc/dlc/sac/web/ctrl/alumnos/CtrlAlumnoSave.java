@@ -52,19 +52,19 @@ public class CtrlAlumnoSave extends HttpServlet {
                 //----------------------------------------
                 //SAC.updateAlumno(alumno);
                 //----------------------------------------
-                db = SAC.getSingleDB();
-                if (id == 0) {
-                    id = DBAlumno.getNextId(db);
-                    alumno.setId(id);
-                }
-                DBAlumno.saveDBError(db, alumno);
-                //----------------------------------------
-                //db = SAC.getPoolDB();
+                //db = SAC.getSingleDB();
                 //if (id == 0) {
                 //    id = DBAlumno.getNextId(db);
                 //    alumno.setId(id);
                 //}
                 //DBAlumno.saveDBError(db, alumno);
+                //----------------------------------------
+                db = SAC.getPoolDB();
+                if (id == 0) {
+                    id = DBAlumno.getNextId(db);
+                    alumno.setId(id);
+                }
+                DBAlumno.saveDBError(db, alumno);
                 //----------------------------------------
 
                 dest = "/alumno.jsp";

@@ -48,11 +48,11 @@ public class CtrlAlumnoView extends HttpServlet {
             //----------------------------------------
             //Alumno alumno = SAC.getAlumno(id);
             //----------------------------------------
-            db = SAC.getSingleDB();
-            Alumno alumno = DBAlumno.loadDB(db, id);
-            //----------------------------------------
-            //db = SAC.getPoolDB();
+            //db = SAC.getSingleDB();
             //Alumno alumno = DBAlumno.loadDB(db, id);
+            //----------------------------------------
+            db = SAC.getPoolDB();
+            Alumno alumno = DBAlumno.loadDB(db, id);
             //----------------------------------------
 
             if (alumno != null) {

@@ -49,11 +49,11 @@ public class CtrlAlumnos extends HttpServlet {
             //if (request.getParameter("populate") != null) SAC.populateAlumnos();
             //List alumnos = SAC.getAlumnosList();
             //----------------------------------------
-            db = SAC.getSingleDB();
-            List alumnos = DBAlumno.loadList(db);
-            //----------------------------------------
-            //db = SAC.getPoolDB();
+            //db = SAC.getSingleDB();
             //List alumnos = DBAlumno.loadList(db);
+            //----------------------------------------
+            db = SAC.getPoolDB();
+            List alumnos = DBAlumno.loadList(db);
             //----------------------------------------
 
             request.setAttribute("alumnos", alumnos);

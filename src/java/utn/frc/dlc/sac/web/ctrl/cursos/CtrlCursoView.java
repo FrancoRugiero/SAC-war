@@ -48,11 +48,11 @@ public class CtrlCursoView extends HttpServlet {
             //----------------------------------------
             //Curso curso = SAC.getCurso(id);
             //----------------------------------------
-            db = SAC.getSingleDB();
-            Curso curso = DBCurso.loadDB(db, id);
-            //----------------------------------------
-            //db = SAC.getPoolDB();
+            //db = SAC.getSingleDB();
             //Curso curso = DBCurso.loadDB(db, id);
+            //----------------------------------------
+            db = SAC.getPoolDB();
+            Curso curso = DBCurso.loadDB(db, id);
             //----------------------------------------
 
             if (curso != null) {

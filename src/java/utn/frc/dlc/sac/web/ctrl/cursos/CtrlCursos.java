@@ -47,11 +47,11 @@ public class CtrlCursos extends HttpServlet {
             //if (request.getParameter("populate") != null) SAC.populateCursos();
             //List cursos = SAC.getCursosList();
             //----------------------------------------
-            db = SAC.getSingleDB();
-            List cursos = DBCurso.loadList(db);
-            //----------------------------------------
-            //db = SAC.getPoolDB();
+            //db = SAC.getSingleDB();
             //List cursos = DBCurso.loadList(db);
+            //----------------------------------------
+            db = SAC.getPoolDB();
+            List cursos = DBCurso.loadList(db);
             //----------------------------------------
 
             request.setAttribute("cursos", cursos);

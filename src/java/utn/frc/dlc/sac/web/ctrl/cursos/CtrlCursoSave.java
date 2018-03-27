@@ -70,21 +70,21 @@ public class CtrlCursoSave extends HttpServlet {
                 //SAC.updateCurso(curso);
                 //curso.setAlumnos(alumnos);
                 //----------------------------------------
-                db = SAC.getSingleDB();
-                if (id == 0) {
-                    id = DBCurso.getNextId(db);
-                    curso.setId(id);
-                }
-                DBCurso.saveDB(db, curso);
-                DBCurso.loadAlumnos(db, curso);
-                //----------------------------------------
-                //db = SAC.getPoolDB();
+                //db = SAC.getSingleDB();
                 //if (id == 0) {
                 //    id = DBCurso.getNextId(db);
                 //    curso.setId(id);
                 //}
                 //DBCurso.saveDB(db, curso);
                 //DBCurso.loadAlumnos(db, curso);
+                //----------------------------------------
+                db = SAC.getPoolDB();
+                if (id == 0) {
+                    id = DBCurso.getNextId(db);
+                    curso.setId(id);
+                }
+                DBCurso.saveDB(db, curso);
+                DBCurso.loadAlumnos(db, curso);
                 //----------------------------------------
 
                 dest = "/curso.jsp";

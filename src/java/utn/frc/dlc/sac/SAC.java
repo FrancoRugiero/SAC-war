@@ -22,7 +22,7 @@ public abstract class SAC {
     private static String DBUserName = "dlcusr";
     private static String DBPassword = "dlcpwd";
 
-    private static String DBResourceName = "jdbc/pg_dlcdb";
+    private static String DBResourceName = "jdbc/sacdb";
 
     public static DBManager getSingleDB() throws Exception {
         DBManager db = new DBManager();

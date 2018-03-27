@@ -47,11 +47,11 @@ public class CtrlCursoDelete extends HttpServlet {
             //----------------------------------------
             //SAC.deleteCurso(id);
             //----------------------------------------
-            db = SAC.getSingleDB();
-            DBCurso.deleteDB(db, id);
-            //----------------------------------------
-            //db = SAC.getPoolDB();
+            //db = SAC.getSingleDB();
             //DBCurso.deleteDB(db, id);
+            //----------------------------------------
+            db = SAC.getPoolDB();
+            DBCurso.deleteDB(db, id);
             //----------------------------------------
 
             dest = "/cursos";
